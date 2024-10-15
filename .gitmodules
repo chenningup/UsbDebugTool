@@ -1,0 +1,3 @@
+[submodule "XuCommunications"]
+	path = XuCommunications
+	url = https://github.com/chenningup/XuCommunications.git
