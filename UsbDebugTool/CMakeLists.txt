@@ -8,6 +8,8 @@ find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
 
 qt_standard_project_setup()
 
+
+add_subdirectory(../XuCommunications XuCommunications)
 qt_add_executable(appUsbDebugTool
     main.cpp
 )
@@ -17,7 +19,7 @@ qt_add_qml_module(appUsbDebugTool
     URI UsbDebugTool
     VERSION 1.0
     QML_FILES
-        Main.qml
+    Main.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -32,7 +34,7 @@ set_target_properties(appUsbDebugTool PROPERTIES
 )
 
 target_link_libraries(appUsbDebugTool
-    PRIVATE Qt6::Quick usb-1.0
+    PRIVATE Qt6::Quick XuCommunications usb-1.0
 )
 
 include(GNUInstallDirs)
