@@ -10,11 +10,16 @@ qt_standard_project_setup()
 
 
 add_subdirectory(../XuCommunications XuCommunications)
+include_directories("${PROJECT_SOURCE_DIR}/../3rd/")
+if(WIN32)
+    link_directories("${PROJECT_SOURCE_DIR}/../Libs/Windows/")
+elseif(UNIX)
+    link_directories("${PROJECT_SOURCE_DIR}/../Libs/Linux/")
+endif()
 qt_add_executable(appUsbDebugTool
     main.cpp
 )
-include_directories("${PROJECT_SOURCE_DIR}/../3rd/")
-link_directories("${PROJECT_SOURCE_DIR}/../Libs/Linux/")
+
 qt_add_qml_module(appUsbDebugTool
     URI UsbDebugTool
     VERSION 1.0
@@ -33,9 +38,16 @@ set_target_properties(appUsbDebugTool PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-target_link_libraries(appUsbDebugTool
-    PRIVATE Qt6::Quick XuCommunications usb-1.0
-)
+if(WIN32)
+    target_link_libraries(appUsbDebugTool
+        PRIVATE Qt6::Quick XuCommunications libusb-1.0
+    )
+elseif(UNIX)
+    target_link_libraries(appUsbDebugTool
+        PRIVATE Qt6::Quick XuCommunications usb-1.0
+    )
+endif()
+
 
 include(GNUInstallDirs)
 install(TARGETS appUsbDebugTool
